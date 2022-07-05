@@ -42,6 +42,6 @@ runs:
       env:
         ACTIONS_PATH: ${{ inputs.path }}
       run: |
-        git rm -r --cached "${ACTIONS_PATH}"
+        rm -rf "${ACTIONS_PATH}/.git"
         echo "${ACTIONS_PATH}" >> "${HOME}/.gitignore"
         git config --global core.excludesFile "${HOME}/.gitignore"
