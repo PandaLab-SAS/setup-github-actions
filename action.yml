@@ -34,6 +34,7 @@ runs:
         path: ${{ inputs.path }}
         lfs: true
         clean: false
+        set-safe-directory: false
         persist-credentials: false
 
     - name: Ignore checked out repository from Git
@@ -41,5 +42,6 @@ runs:
       env:
         ACTIONS_PATH: ${{ inputs.path }}
       run: |
+        git rm -r --cached "${ACTIONS_PATH}"
         echo "${ACTIONS_PATH}" >> "${HOME}/.gitignore"
         git config --global core.excludesFile "${HOME}/.gitignore"
