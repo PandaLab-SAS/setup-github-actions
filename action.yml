@@ -36,8 +36,8 @@ runs:
         clean: false
         persist-credentials: false
 
-  - name: Ignore checked out repository from Git
-    shell: bash
-    run: git config --global core.excludesFile "${ACTIONS_PATH}"
-    env:
-      ACTIONS_PATH: ${{ inputs.path }}
+    - name: Ignore checked out repository from Git
+      shell: bash
+      run: git config --global core.excludesFile "${ACTIONS_PATH}"
+      env:
+        ACTIONS_PATH: ${{ inputs.path }}
