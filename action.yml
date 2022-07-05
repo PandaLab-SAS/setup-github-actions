@@ -1,0 +1,43 @@
+name: Setup GitHub Actions
+description: Fetches private actions in the current repository.
+
+inputs:
+  token:
+    type: string
+    required: true
+    description: The token that will be used to checkout the private repository
+  repository:
+    type: string
+    required: false
+    default: ${{ github.repository_owner }}/actions
+    description: The repository that will be checked out
+  ref:
+    type: string
+    required: false
+    default: master
+    description: The reference that will be checked out
+  path:
+    type: string
+    required: false
+    default: ${{ github.workspace }}/.github/actions
+    description: The path where the repository will be checked out
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v3
+      name: Check-out custom actions
+      with:
+        repository: ${{ inputs.repository }}
+        ref: ${{ inputs.ref }}
+        token: ${{ inputs.token }}
+        path: ${{ inputs.path }}
+        lfs: true
+        clean: false
+        persist-credentials: false
+
+  - name: Ignore checked out repository from Git
+    shell: bash
+    run: git config --global core.excludesFile "${ACTIONS_PATH}"
+    env:
+      ACTIONS_PATH: ${{ inputs.path }}
