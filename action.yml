@@ -38,6 +38,8 @@ runs:
 
     - name: Ignore checked out repository from Git
       shell: bash
-      run: git config --global core.excludesFile "${ACTIONS_PATH}"
       env:
         ACTIONS_PATH: ${{ inputs.path }}
+      run: |
+        echo "${ACTIONS_PATH}" >> "${HOME}/.gitignore"
+        git config --global core.excludesFile "${HOME}/.gitignore"
